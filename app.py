@@ -6,7 +6,10 @@ import os
 
 mongodb_host = os.environ.get('MONGO_HOST', 'localhost')
 mongodb_port = int(os.environ.get('MONGO_PORT', '27017'))
-client = MongoClient(mongodb_host, mongodb_port)    #Configure the connection to the database
+client = MongoClient(mongodb_host, mongodb_port)
+
+# client = MongoClient("mongodb://db:27017")#Configure the connection to the database
+
 db = client.camp2016    #Select the database
 todos = db.todo #Select the collection
 
@@ -123,6 +126,6 @@ if __name__ == "__main__":
 	env = os.environ.get('FLASK_ENV', 'development')
 	port = int(os.environ.get('PORT', 5000))
 	debug = False if env == 'production' else True
-	app.run(debug=True)
 	app.run(port=port, debug=debug)
-	# Careful with the debug mode..
+
+# Careful with the debug mode..
