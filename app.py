@@ -34,7 +34,9 @@ def lists ():
 @app.route("/uncompleted")
 def tasks ():
 	#Display the Uncompleted Tasks
-	todos_l = todos.find({"done":"no"})
+	# todos_l = todos.find({"done":"no"})
+	# intentional error to test the health monitoring
+	todos_l = todos.find({"testtesttest":"no"})
 	a2="active"
 	return render_template('index.html',a2=a2,todos=todos_l,t=title,h=heading)
 
@@ -121,6 +123,9 @@ def search():
 @app.route("/about")
 def about():
 	return render_template('credits.html',t=title,h=heading)
+@app.route("/health")
+def health_monitoring():
+	return "Everything is healthy!", 200
 
 if __name__ == "__main__":
 	env = os.environ.get('FLASK_ENV', 'development')
