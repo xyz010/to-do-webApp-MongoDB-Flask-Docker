@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   flask_app:
-    image: xyz010/ccbd_todo_app:v1
+    image: xyz010/ccbd_todo_app:v3
     container_name: todo-container
 #    build: .
     ports:

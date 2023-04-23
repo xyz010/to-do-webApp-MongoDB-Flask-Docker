@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
   - name: flask-app
-    image: xyz010/ccbd_todo_app:v1
+    image: xyz010/ccbd_todo_app:v3
     ports:
     - containerPort: 5000
     env:
@@ -110,6 +110,10 @@ metadata:
   name: flask-app-deployment
 spec:
   replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
   selector:
     matchLabels:
       app: flask-app
@@ -120,7 +124,7 @@ spec:
     spec:
       containers:
         - name: flask-app
-          image: xyz010/ccbd_todo_app:v1
+          image: xyz010/ccbd_todo_app:v3
           ports:
             - containerPort: 5000
           env:
@@ -130,3 +134,19 @@ spec:
               value: mongodb-service
             - name: MONGO_PORT
               value: "27017"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5001
+            initialDelaySeconds: 30
+            timeoutSeconds: 1
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5001
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+            periodSeconds: 5
+            failureThreshold: 3
