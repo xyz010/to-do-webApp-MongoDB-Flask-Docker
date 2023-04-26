@@ -13,7 +13,8 @@ spec:
     spec:
       containers:
         - name: flask-app
-          image: xyz010/ccbd_todo_app:v3
+          image: xyz010/ccbd_todo_app:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 5000
           env:
