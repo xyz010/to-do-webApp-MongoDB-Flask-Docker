@@ -8,10 +8,10 @@ from flask import jsonify
 
 mongodb_host = os.environ.get('MONGO_HOST', 'localhost')
 mongodb_port = int(os.environ.get('MONGO_PORT', '27017'))
-# client = MongoClient(mongodb_host, mongodb_port)
+client = MongoClient(mongodb_host, mongodb_port)
 
-# this is the intentional error
-client = os.environ.get('MONGO_HOST', 'invalid-hostname')
+# # this is the intentional error
+# client = os.environ.get('MONGO_HOST', 'invalid-hostname')
 
 
 
@@ -38,14 +38,10 @@ def lists ():
     return render_template('index.html',a1=a1,todos=todos_l,t=title,h=heading)
 
 @app.route("/")
-# @app.route("/test")
-
 @app.route("/uncompleted")
 def tasks ():
     #Display the Uncompleted Tasks
-    # todos_l = todos.find({"done":"no"})
-    # intentional error to test the health monitoring
-    todos_l = todos.find({"testtesttest":"no"})
+    todos_l = todos.find({"done":"no"})
     a2="active"
     return render_template('index.html',a2=a2,todos=todos_l,t=title,h=heading)
 
@@ -62,7 +58,7 @@ def done ():
     #Done-or-not ICON
     id=request.values.get("_id")
     task=todos.find({"_id":ObjectId(id)})
-    if(task[0]["done"]=="yes"):
+    if task[0]["done"]== "yes":
         todos.update_one({"_id":ObjectId(id)}, {"$set": {"done":"no"}})
     else:
         todos.update_one({"_id":ObjectId(id)}, {"$set": {"done":"yes"}})
