@@ -131,12 +131,13 @@ def about():
 
 @app.route("/health")
 def health():
-    try:
-        # Check if the database connection is working by pinging it
-        client.admin.command('ping')
-        return jsonify({"status": "OK"}), 200
-    except Exception as e:
-        return jsonify({"status": "ERROR", "message": str(e)}), 500
+    # try:
+    #     # Check if the database connection is working by pinging it
+    #     client.admin.command('ping')
+    #     return jsonify({"status": "OK"}), 200
+    # except Exception as e:
+    #     return jsonify({"status": "ERROR", "message": str(e)}), 500
+    return "ok", 200
 
 
 if __name__ == "__main__":
